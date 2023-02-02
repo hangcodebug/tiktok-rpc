@@ -1,0 +1,58 @@
+syntax ="proto3";
+package user;
+option go_package="bluegopher/core";
+
+message BaseResp{
+  int64 status_code = 1;
+  string status_message =2;
+  int64 service_time = 3;
+}
+
+message User{
+  int64   id = 1;      // 用户id
+  string  name = 2;    // 用户名称
+  int64   follow_count = 3; // 关注总数
+  int64   follower_count =4;//粉丝总数
+  bool    is_follow = 5;    //true=已关注，false=未关注
+}
+// 用户信息
+message douyin_user_request{
+  int64 user_id = 1;
+  string token = 2;
+}
+
+message douyin_user_response{
+  int32 status_code = 1;
+  string status_msg = 2;
+  User user = 3;
+}
+// 用户注册
+message douyin_user_register_request{
+  string username = 1;
+  string password = 2;
+}
+
+message douyin_user_register_response{
+  int32 status_code =1;
+  string status_msg =2;
+  int64 user_id = 3;
+  string token = 4;
+}
+// 用户登录
+message douyin_user_login_request{
+  string username = 1;
+  string password = 2;
+}
+
+message douyin_user_login_response{
+  int32 status_code = 1;
+  string status_msg = 2;
+  int64 user_id = 3;
+  string token = 4;
+}
+
+service UserService{
+  rpc GetUser (douyin_user_request) returns (douyin_user_response) {};
+  rpc GegisterUser (douyin_user_register_request) returns (douyin_user_register_response) {};
+  rpc LoginUser (douyin_user_login_request) returns (douyin_user_login_response) {};
+}
